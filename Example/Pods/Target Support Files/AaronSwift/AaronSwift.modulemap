@@ -1,0 +1,6 @@
+framework module AaronSwift {
+  umbrella header "AaronSwift-umbrella.h"
+
+  export *
+  module * { export * }
+}

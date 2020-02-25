@@ -1,0 +1,6 @@
+framework module Pods_AaronSwift_Tests {
+  umbrella header "Pods-AaronSwift_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
