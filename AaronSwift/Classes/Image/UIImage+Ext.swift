@@ -8,7 +8,23 @@
 import Foundation
 import CoreGraphics
 
-extension UIImage{
+extension UIImage {
+    
+    public var containsAlphaChannel: Bool? {
+        if let image = cgImage {
+            return UIImage.containsAlphaChannel(by: image)
+        }
+        return nil
+    }
+    
+    public class func containsAlphaChannel(by image: CGImage) -> Bool {
+        let alphaInfo = CGImageAlphaInfo(rawValue: image.alphaInfo.rawValue & CGBitmapInfo.alphaInfoMask.rawValue)
+        var hasAlpha = false
+        if alphaInfo == .premultipliedLast || alphaInfo == .premultipliedFirst || alphaInfo == .last || alphaInfo == .first {
+            hasAlpha = true
+        }
+        return hasAlpha
+    }
     
     public func unzip() -> UIImage? {
         guard let imageRef = cgImage else {
@@ -16,11 +32,7 @@ extension UIImage{
         }
         let width = imageRef.width
         let height = imageRef.height
-        let alphaInfo = CGImageAlphaInfo(rawValue: imageRef.alphaInfo.rawValue & CGBitmapInfo.alphaInfoMask.rawValue)
-        var hasAlpha = false
-        if alphaInfo == .premultipliedLast || alphaInfo == .premultipliedFirst || alphaInfo == .last || alphaInfo == .first {
-            hasAlpha = true
-        }
+        let hasAlpha = containsAlphaChannel ?? false
         var bitmapInfo = CGBitmapInfo.byteOrder32Little
         let value = bitmapInfo.rawValue | (hasAlpha ? CGImageAlphaInfo.premultipliedFirst.rawValue : CGImageAlphaInfo.noneSkipFirst.rawValue)
         bitmapInfo = CGBitmapInfo(rawValue: value)
