@@ -18,15 +18,15 @@ pod repo push AaronSwift AaronSwift.podspec --allow-warnings
 
 echo "发布完成"
 
-if [ -d "~/.cocoapods/repos/AaronSwift/Classes/" ]; then
+if [ -d "~/.cocoapods/repos/AaronSwift/AaronSwift/Classes/" ]; then
 	echo "包含Class文件夹，正在删除"
-	rm -rf ~/.cocoapods/repos/AaronSwift/Classes
+	rm -rf ~/.cocoapods/repos/AaronSwift/AaronSwift/Classes
 	echo "删除Class文件夹完成"
 fi
 
-if [ -d "~/.cocoapods/repos/AaronSwift/Assets/" ]; then
+if [ -d "~/.cocoapods/repos/AaronSwift/AaronSwift/Assets/" ]; then
 	echo "包含Assets文件夹"
-        rm -rf ~/.cocoapods/repos/AaronSwift/Assets
+        rm -rf ~/.cocoapods/repos/AaronSwift/AaronSwift/Assets
 	echo "删除Assets文件夹完成"
 fi
 

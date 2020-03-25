@@ -7,6 +7,11 @@
 
 import Foundation
 import CoreGraphics
+#if os(macOS)
+import AppKit.NSScreen
+#endif
+
+private var staticColorSpace: CGColorSpace?
 
 extension UIImage {
     
@@ -26,6 +31,31 @@ extension UIImage {
         return hasAlpha
     }
     
+    public class var colorSpace: CGColorSpace {
+        #if os(macOS)
+        if let screenColorSpace = NSScreen.main?.colorSpace?.cgColorSpace {
+            return screenColorSpace
+        }
+        #endif
+        func getColorSpace() -> CGColorSpace {
+            var colorSpace: CGColorSpace
+            #if os(iOS) || os(watchOS) || os(tvOS)
+            if #available(iOS 9.0, tvOS 9.0, *) {
+                colorSpace = CGColorSpace(name: CGColorSpace.sRGB) ?? CGColorSpaceCreateDeviceRGB()
+            } else {
+                colorSpace = CGColorSpaceCreateDeviceRGB()
+            }
+            #else
+            colorSpace = CGColorSpaceCreateDeviceRGB()
+            #endif
+            return colorSpace
+        }
+        if staticColorSpace == nil {
+            staticColorSpace = getColorSpace()
+        }
+        return staticColorSpace!
+    }
+    
     public func unzip() -> UIImage? {
         guard let imageRef = cgImage else {
             return nil
@@ -36,7 +66,7 @@ extension UIImage {
         var bitmapInfo = CGBitmapInfo.byteOrder32Little
         let value = bitmapInfo.rawValue | (hasAlpha ? CGImageAlphaInfo.premultipliedFirst.rawValue : CGImageAlphaInfo.noneSkipFirst.rawValue)
         bitmapInfo = CGBitmapInfo(rawValue: value)
-        let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitmapInfo.rawValue)
+        let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8, bytesPerRow: 0, space: UIImage.colorSpace, bitmapInfo: bitmapInfo.rawValue)
         context?.draw(imageRef, in: CGRect(x: 0, y: 0, width: width, height: height))
         guard let newImageRef = context?.makeImage() else {
             return nil
