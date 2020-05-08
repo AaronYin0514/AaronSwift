@@ -31,7 +31,7 @@ extension UIImage {
         return hasAlpha
     }
     
-    public class var colorSpace: CGColorSpace {
+    public static let colorSpace: CGColorSpace = {
         #if os(macOS)
         if let screenColorSpace = NSScreen.main?.colorSpace?.cgColorSpace {
             return screenColorSpace
@@ -54,7 +54,7 @@ extension UIImage {
             staticColorSpace = getColorSpace()
         }
         return staticColorSpace!
-    }
+    }()
     
     public func unzip() -> UIImage? {
         guard let imageRef = cgImage else {
