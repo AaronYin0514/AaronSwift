@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AaronSwift
 
 class ViewController: UIViewController {
 
@@ -18,6 +19,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         title = "Demo"
         view.addSubview(tableView)
+        
+        
+        
+        let aa = [0, 4, 8, 16]
+        
+        print(gcdEuclidean(aa))
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
