@@ -7,13 +7,14 @@
 
 import Foundation
 
-public func gcdEuclidean(_ x: Int, _ y: Int) -> Int {
-    var temp = 0, a = x, b = y
+public func gcdEuclidean<I: BinaryInteger>(_ x: I, _ y: I) -> I {
+    var a = x, b = y
     if a < b {
-        temp = a
-        a = b
-        b = temp
+        a = a ^ b
+        b = a ^ b
+        a = a ^ b
     }
+    var temp = a
     while(b != 0) {
         temp = a % b
         a = b
@@ -22,33 +23,33 @@ public func gcdEuclidean(_ x: Int, _ y: Int) -> Int {
     return a
 }
 
-public func lcmEuclidean(_ x: Int, _ y: Int) -> Int {
+public func lcmEuclidean<I: BinaryInteger>(_ x: I, _ y: I) -> I {
     let temp = gcdEuclidean(x, y)
     return x * y / temp
 }
 
-public func gcdEuclidean(_ array: [Int]) -> Int {
+public func gcdEuclidean<I: BinaryInteger>(_ array: [I]) -> I {
     if array.count == 0 { return 0 }
-    return array.reduce(0) { (x, y) -> Int in
+    return array.reduce(0) { (x, y) -> I in
         return gcdEuclidean(x, y)
     }
 }
 
-public func lcmEuclidean(_ array: [Int]) -> Int {
+public func lcmEuclidean<I: BinaryInteger>(_ array: [I]) -> I {
     let gcd = gcdEuclidean(array)
-    let minMultiple = array.reduce(1) { (x, y) -> Int in
+    let minMultiple = array.reduce(1) { (x, y) -> I in
         x * y
     }
-    let pow = Int(powl(Float80(gcd), Float80(array.count - 1)))
+    let pow = I(powl(Float80(gcd), Float80(array.count - 1)))
     return minMultiple / pow
 }
 
-public func gcdStein(_ x: Int, _ y: Int) -> Int {
-    var factor = 0, temp = 0, a = x, b = y
+public func gcdStein<I: BinaryInteger>(_ x: I, _ y: I) -> I {
+    var factor = I(0), a = x, b = y
     if a < b {
-        temp = a
-        a = b
-        b = temp
+        a = a ^ b
+        b = a ^ b
+        a = a ^ b
     }
     if 0 == b {
         return 0
@@ -65,9 +66,9 @@ public func gcdStein(_ x: Int, _ y: Int) -> Int {
             if b & 0x1 > 0 {
                 a = a >> 1
                 if a < b {
-                    temp = a
-                    a = b
-                    b = temp
+                    a = a ^ b
+                    b = a ^ b
+                    a = a ^ b
                 }
             } else {
                 a = a >> 1
@@ -79,7 +80,7 @@ public func gcdStein(_ x: Int, _ y: Int) -> Int {
     return x << factor
 }
 
-public func lcmStein(_ x: Int, _ y: Int) -> Int {
+public func lcmStein<I: BinaryInteger>(_ x: I, _ y: I) -> I {
     let temp = gcdStein(x, y)
     return x * y / temp
 }

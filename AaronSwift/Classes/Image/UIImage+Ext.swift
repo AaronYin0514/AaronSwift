@@ -74,5 +74,69 @@ extension UIImage {
         return UIImage(cgImage: newImageRef)
     }
     
+}
+
+#if os(iOS) || os(watchOS) || os(tvOS)
+
+extension UIImage {
+    
+    public class func orientation(fromEXIF exif: CGImagePropertyOrientation) -> Orientation {
+        return exif.iOSOrientation
+    }
     
 }
+
+extension CGImagePropertyOrientation {
+    
+    public var iOSOrientation: UIImage.Orientation {
+        var orientation = UIImage.Orientation.up
+        switch self {
+        case .up:
+            orientation = .up
+        case .down:
+            orientation = .down
+        case .left:
+            orientation = .left
+        case .right:
+            orientation = .right
+        case .upMirrored:
+            orientation = .upMirrored
+        case .downMirrored:
+            orientation = .downMirrored
+        case .leftMirrored:
+            orientation = .leftMirrored
+        case .rightMirrored:
+            orientation = .rightMirrored
+        }
+        return orientation
+    }
+    
+}
+
+extension UIImage.Orientation {
+    
+    public var exifOrientation: CGImagePropertyOrientation {
+        var orientation = CGImagePropertyOrientation.up
+        switch self {
+        case .up:
+            orientation = .up
+        case .down:
+            orientation = .down
+        case .left:
+            orientation = .left
+        case .right:
+            orientation = .right
+        case .upMirrored:
+            orientation = .upMirrored
+        case .downMirrored:
+            orientation = .downMirrored
+        case .leftMirrored:
+            orientation = .leftMirrored
+        case .rightMirrored:
+            orientation = .rightMirrored
+        }
+        return orientation
+    }
+    
+}
+#endif

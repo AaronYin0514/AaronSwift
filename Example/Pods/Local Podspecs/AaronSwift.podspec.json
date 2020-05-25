@@ -1,6 +1,6 @@
 {
   "name": "AaronSwift",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "summary": "Aaron私有Swift公共组件库AaronSwift.",
   "description": "TODO: Add long description of the pod here.",
   "homepage": "https://github.com/AaronYin0514/AaronSwift",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/AaronYin0514/AaronSwift.git",
-    "tag": "0.1.0"
+    "tag": "0.1.1"
   },
   "platforms": {
     "ios": "8.0"
