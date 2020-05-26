@@ -93,7 +93,7 @@ public struct ImageGIFDecoder: ImageDecoderProtocol {
     
     public func decode(_ data: Data) -> UIImage? {
         let scaleFactor = (scale < 0 || scale > 1) ? 1.0 : scale
-        return UIImage.animatedImage(with: data, scale: scaleFactor)
+        return UIImage.animatedImage(with: data, scale: scaleFactor, preserveAspectRatio: preserveAspectRatio, thumbnailPixelSize: thumbnailPixelSize)
     }
     
 }

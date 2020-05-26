@@ -9,7 +9,7 @@ import UIKit
 
 extension UIImage {
     
-    public class func animatedImage(with data: Data, scale: CGFloat = 1.0) -> UIImage? {
+    public class func animatedImage(with data: Data, scale: CGFloat = 1.0, preserveAspectRatio ratio: Bool = true, thumbnailPixelSize size: CGSize = .zero) -> UIImage? {
         guard let source = ImageSource(data) else { return nil }
         if source.count == 0 { return nil }
         if source.count == 1 { return source.image(at: 0) }
@@ -19,7 +19,7 @@ extension UIImage {
         var frames: [(UIImage, UInt)] = []
         var durations: [UInt] = []
         for i in 0 ..< source.count {
-            guard let image = source.image(at: i) else {
+            guard let image = source.image(at: i, scale: scale, preserveAspectRatio: ratio, thumbnailPixelSize: size) else {
                 continue
             }
             let duration = source.duration(at: i) * 1000
@@ -50,30 +50,9 @@ public struct ImageSource {
     
     public let count: Int
     
-    #if os(iOS) || os(watchOS) || os(tvOS)
-    public let orientation: UIImage.Orientation
-    #else
-    public let orientation: CGImagePropertyOrientation
-    #endif
-    
-    public let pixelSize: CGSize
-    
-    public let uttype: CFString?
-    
     public init(_ source: CGImageSource) {
         self.source = source
         count = CGImageSourceGetCount(source)
-        let properties = (CGImageSourceCopyProperties(source, nil) as? [CFString: Any]) ?? [:]
-        let exifOrientation = (properties[kCGImagePropertyOrientation] as? CGImagePropertyOrientation) ?? .up
-        #if os(iOS) || os(watchOS) || os(tvOS)
-        orientation = exifOrientation.iOSOrientation
-        #else
-        orientation = exifOrientation
-        #endif
-        let pixelWidth = (properties[kCGImagePropertyPixelWidth] as? Int) ?? 0
-        let pixelHeight = (properties[kCGImagePropertyPixelHeight] as? Int) ?? 0
-        pixelSize = CGSize(width: pixelWidth, height: pixelHeight)
-        uttype = CGImageSourceGetType(source)
     }
     
     public init?(_ data: Data) {
@@ -81,8 +60,36 @@ public struct ImageSource {
         self.init(source)
     }
     
-    func image(at index: Int, options: CFDictionary? = nil) -> UIImage? {
-        guard let image = CGImageSourceCreateImageAtIndex(source, index, options) else { return nil }
+    func image(at index: Int, scale: CGFloat = 1.0, preserveAspectRatio ratio: Bool = true, thumbnailPixelSize size: CGSize = .zero, options: CFDictionary? = nil) -> UIImage? {
+        let properties = CGImageSourceCopyPropertiesAtIndex(source, index, options) as? [CFString: Any] ?? [:]
+        let exifOrientation = (properties[kCGImagePropertyOrientation] as? CGImagePropertyOrientation) ?? .up
+        #if os(iOS) || os(watchOS) || os(tvOS)
+        let orientation = exifOrientation.iOSOrientation
+        #else
+        let orientation = exifOrientation
+        #endif
+        let pixelWidth = (properties[kCGImagePropertyPixelWidth] as? CGFloat) ?? 0.0
+        let pixelHeight = (properties[kCGImagePropertyPixelHeight] as? CGFloat) ?? 0.0
+//        let uttype = CGImageSourceGetType(source)
+        var cgImage: CGImage?
+        var decodingOptions = options as? [CFString: Any] ?? [:]
+        if pixelWidth == 0 || pixelHeight == 0 || size.width == 0 || size.height == 0 || (pixelWidth <= size.width && pixelHeight <= size.height) {
+            cgImage = CGImageSourceCreateImageAtIndex(source, index, decodingOptions as CFDictionary)
+        } else {
+            decodingOptions[kCGImageSourceCreateThumbnailWithTransform] = ratio
+            var maxPixelSize: CGFloat = 0.0
+            if ratio {
+                let pixelRatio = pixelWidth / pixelHeight
+                let thumbnailRatio = size.width / size.height;
+                maxPixelSize = pixelRatio > thumbnailRatio ? size.width : size.height
+            } else {
+                maxPixelSize = max(size.width, size.height)
+            }
+            decodingOptions[kCGImageSourceThumbnailMaxPixelSize] = maxPixelSize
+            decodingOptions[kCGImageSourceCreateThumbnailFromImageIfAbsent] = true
+            cgImage = CGImageSourceCreateThumbnailAtIndex(source, index, decodingOptions as CFDictionary)
+        }
+        guard let image = cgImage else { return nil }
         return UIImage(cgImage: image, scale: 1.0, orientation: orientation)
     }
     
