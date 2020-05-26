@@ -75,13 +75,17 @@ public struct ImageGIFDecoder: ImageDecoderProtocol {
     
     public typealias Base = UIImage
     
-    public var scale: CGFloat = 1.0
+    public var scale: CGFloat
     
-    public var preserveAspectRatio: Bool = true
+    public var preserveAspectRatio: Bool
     
-    public var thumbnailPixelSize: CGSize = .zero
+    public var thumbnailPixelSize: CGSize
     
-    public init() {}
+    public init(scale: CGFloat = 1.0, preserveAspectRatio: Bool = true, thumbnailPixelSize: CGSize = .zero) {
+        self.scale = scale
+        self.preserveAspectRatio = preserveAspectRatio
+        self.thumbnailPixelSize = thumbnailPixelSize
+    }
     
     public func decodable(_ data: Data) -> Bool {
         data.imageFormat == .gif
@@ -89,7 +93,7 @@ public struct ImageGIFDecoder: ImageDecoderProtocol {
     
     public func decode(_ data: Data) -> UIImage? {
         let scaleFactor = (scale < 0 || scale > 1) ? 1.0 : scale
-        return UIImage.animatedImage(with: data)
+        return UIImage.animatedImage(with: data, scale: scaleFactor)
     }
     
 }

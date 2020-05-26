@@ -9,7 +9,7 @@ import UIKit
 
 extension UIImage {
     
-    public class func animatedImage(with data: Data) -> UIImage? {
+    public class func animatedImage(with data: Data, scale: CGFloat = 1.0) -> UIImage? {
         guard let source = ImageSource(data) else { return nil }
         if source.count == 0 { return nil }
         if source.count == 1 { return source.image(at: 0) }

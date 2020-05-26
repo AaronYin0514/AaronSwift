@@ -21,7 +21,7 @@ class GIFViewController: UIViewController {
         let url = Bundle.main.url(forResource: "gif3", withExtension: "gif")
         let data = try! Data(contentsOf: url!)
         
-        let decoder = ImageGIFDecoder()
+        let decoder = ImageGIFDecoder(scale: 0.5)
         
         if decoder.decodable(data) {
             if let image = decoder.decode(data) {
