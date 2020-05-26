@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iQu-c4-QNM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="iQu-c4-QNM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -110,11 +110,31 @@
                                     <constraint firstAttribute="height" constant="200" id="I6v-nt-lcp"/>
                                 </constraints>
                             </imageView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="X01-Rx-jTt">
+                                <rect key="frame" x="0.0" y="62" width="375" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="jk8-25-mux"/>
+                                </constraints>
+                                <segments>
+                                    <segment title="JPG"/>
+                                    <segment title="PNG"/>
+                                    <segment title="TIFF"/>
+                                    <segment title="HEIC"/>
+                                    <segment title="WEBP"/>
+                                    <segment title="GIF"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentAction:" destination="k2T-Sa-pF2" eventType="valueChanged" id="yrP-jH-bqU"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="V4J-yr-wed" firstAttribute="centerX" secondItem="ZXQ-yw-CRg" secondAttribute="centerX" id="6eA-io-ILE"/>
+                            <constraint firstItem="X01-Rx-jTt" firstAttribute="top" secondItem="16h-fo-xFt" secondAttribute="bottom" constant="18" id="OLO-ym-3vG"/>
+                            <constraint firstAttribute="trailing" secondItem="X01-Rx-jTt" secondAttribute="trailing" id="duI-5R-CKT"/>
                             <constraint firstItem="V4J-yr-wed" firstAttribute="top" secondItem="16h-fo-xFt" secondAttribute="bottom" constant="79" id="fdu-qc-1gf"/>
+                            <constraint firstItem="X01-Rx-jTt" firstAttribute="leading" secondItem="ZXQ-yw-CRg" secondAttribute="leading" id="lqj-Bh-xbR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="GIF解码" id="o0L-ud-cjs"/>
