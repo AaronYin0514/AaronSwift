@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol Decoder {
+public protocol DecoderProtocol {
     
     associatedtype Base
     
@@ -17,9 +17,25 @@ public protocol Decoder {
     
 }
 
-public struct ImageDecoder: Decoder {
+public protocol ImageDecoderProtocol: DecoderProtocol {
+    
+    var scale: CGFloat { set get }
+    
+    var preserveAspectRatio: Bool { set get }
+    
+    var thumbnailPixelSize: CGSize { set get }
+    
+}
+
+public struct ImageDecoder: ImageDecoderProtocol {
     
     public typealias Base = UIImage
+    
+    public var scale: CGFloat = 1.0
+    
+    public var preserveAspectRatio: Bool = true
+    
+    public var thumbnailPixelSize: CGSize = .zero
     
     public init() {}
     
@@ -36,6 +52,7 @@ public struct ImageDecoder: Decoder {
     }
     
     public func decode(_ data: Data) -> UIImage? {
+        let scaleFactor = (scale < 0 || scale > 1) ? 1.0 : scale
         guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
             return nil
         }
@@ -46,17 +63,23 @@ public struct ImageDecoder: Decoder {
         let exifOrientation = (properties[kCGImagePropertyOrientation] as? CGImagePropertyOrientation) ?? .up
         #if os(iOS) || os(watchOS) || os(tvOS)
         let orientation = exifOrientation.iOSOrientation
-        return UIImage(cgImage: image, scale: 1.0, orientation: orientation)
+        return UIImage(cgImage: image, scale: scaleFactor, orientation: orientation)
         #else
-        return UIImage(cgImage: image, scale: 1.0, orientation: exifOrientation)
+        return UIImage(cgImage: image, scale: scaleFactor, orientation: exifOrientation)
         #endif
     }
     
 }
 
-public struct ImageGIFDecoder: Decoder {
+public struct ImageGIFDecoder: ImageDecoderProtocol {
     
     public typealias Base = UIImage
+    
+    public var scale: CGFloat = 1.0
+    
+    public var preserveAspectRatio: Bool = true
+    
+    public var thumbnailPixelSize: CGSize = .zero
     
     public init() {}
     
@@ -65,8 +88,8 @@ public struct ImageGIFDecoder: Decoder {
     }
     
     public func decode(_ data: Data) -> UIImage? {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return nil }
-        return UIImage.animatedImage(with: source)
+        let scaleFactor = (scale < 0 || scale > 1) ? 1.0 : scale
+        return UIImage.animatedImage(with: data)
     }
     
 }
