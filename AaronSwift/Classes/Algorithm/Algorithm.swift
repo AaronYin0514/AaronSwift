@@ -40,7 +40,7 @@ public func lcmEuclidean<I: BinaryInteger>(_ array: [I]) -> I {
     let minMultiple = array.reduce(1) { (x, y) -> I in
         x * y
     }
-    let pow = I(powl(Float80(gcd), Float80(array.count - 1)))
+    let pow = I(Darwin.pow(Double(gcd), Double(array.count - 1)))
     return minMultiple / pow
 }
 
