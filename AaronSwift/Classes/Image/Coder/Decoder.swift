@@ -21,10 +21,6 @@ public protocol ImageDecoderProtocol: DecoderProtocol {
     
     var scale: CGFloat { set get }
     
-    var preserveAspectRatio: Bool { set get }
-    
-    var thumbnailPixelSize: CGSize { set get }
-    
 }
 
 public struct ImageDecoder: ImageDecoderProtocol {
@@ -33,11 +29,9 @@ public struct ImageDecoder: ImageDecoderProtocol {
     
     public var scale: CGFloat = 1.0
     
-    public var preserveAspectRatio: Bool = true
-    
-    public var thumbnailPixelSize: CGSize = .zero
-    
-    public init() {}
+    public init(scale: CGFloat = 1.0) {
+        self.scale = scale
+    }
     
     public func decodable(_ data: Data) -> Bool {
         let format = data.imageFormat
@@ -53,25 +47,20 @@ public struct ImageDecoder: ImageDecoderProtocol {
     
     public func decode(_ data: Data) -> UIImage? {
         let scaleFactor = (scale < 0 || scale > 1) ? 1.0 : scale
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else {
-            return nil
-        }
-        guard let image = CGImageSourceCreateThumbnailAtIndex(source, 0, nil) else {
-            return nil
-        }
-        let properties = (CGImageSourceCopyProperties(source, nil) as? [CFString: Any]) ?? [:]
-        let exifOrientation = (properties[kCGImagePropertyOrientation] as? CGImagePropertyOrientation) ?? .up
-        #if os(iOS) || os(watchOS) || os(tvOS)
-        let orientation = exifOrientation.iOSOrientation
-        return UIImage(cgImage: image, scale: scaleFactor, orientation: orientation)
-        #else
-        return UIImage(cgImage: image, scale: scaleFactor, orientation: exifOrientation)
-        #endif
+        return UIImage.animatedImage(with: data, scale: scaleFactor)
     }
     
 }
 
-public struct ImageGIFDecoder: ImageDecoderProtocol {
+public protocol GIFDecoderProtocol: ImageDecoderProtocol {
+    
+    var preserveAspectRatio: Bool { set get }
+    
+    var thumbnailPixelSize: CGSize { set get }
+    
+}
+
+public struct ImageGIFDecoder: GIFDecoderProtocol {
     
     public typealias Base = UIImage
     
