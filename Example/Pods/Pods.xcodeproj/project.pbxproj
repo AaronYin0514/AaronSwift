@@ -91,6 +91,7 @@
 		936B65DF246E93C20064C49C /* Decoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936B65DE246E93C20064C49C /* Decoder.swift */; };
 		936B6622247360290064C49C /* UIImage+HEIC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936B6621247360290064C49C /* UIImage+HEIC.swift */; };
 		93BE77E8247B91B30003462B /* UIImage+GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BE77E7247B91B30003462B /* UIImage+GIF.swift */; };
+		93BE77F3247C9B7B0003462B /* UIImage+Format.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93BE77F2247C9B7B0003462B /* UIImage+Format.swift */; };
 		93C0567E24529BC800FD381E /* ImageFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93C0567D24529BC800FD381E /* ImageFilter.swift */; };
 		950AF9921F1DEA04C3D21D76D31601D0 /* PrettySyntax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3B651187CE45B77CE502B336643D71 /* PrettySyntax.swift */; };
 		96C4F7349BB0B624490075CB4F37F2B4 /* CwlCatchBadInstruction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92DA5634DE2648F108858D1514F11E5 /* CwlCatchBadInstruction.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -116,7 +117,6 @@
 		B17144DB240529FD00C11A39 /* Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17144DA240529FD00C11A39 /* Sort.swift */; };
 		B17CEF5ECE9BA91DC07E7208AECB567F /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A86419D49CDA286B06299A943CB10C6 /* Filter.swift */; };
 		B1A65A86242A2ADC00D8F2E8 /* UIImage+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A65A85242A2ADC00D8F2E8 /* UIImage+Ext.swift */; };
-		B1A65A88242A2B4600D8F2E8 /* Data+ImageFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1A65A87242A2B4600D8F2E8 /* Data+ImageFormat.swift */; };
 		B25D795BDC4F426BC01EFC911F368B81 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 148E9B9B88A6C299608B94017E20CF78 /* Foundation.framework */; };
 		B5491A88571862A1B914E6BE3CFCA5BD /* QuickSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B9587E1B43AC63DCEA8F75F1D5B6FBF /* QuickSpec.m */; };
 		B662FB934B08450530A1A521489732B3 /* FailureMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5283CE040C08E9C9AB9C26E65B0A4A05 /* FailureMessage.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -344,6 +344,7 @@
 		936B65DE246E93C20064C49C /* Decoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Decoder.swift; sourceTree = "<group>"; };
 		936B6621247360290064C49C /* UIImage+HEIC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+HEIC.swift"; sourceTree = "<group>"; };
 		93BE77E7247B91B30003462B /* UIImage+GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+GIF.swift"; sourceTree = "<group>"; };
+		93BE77F2247C9B7B0003462B /* UIImage+Format.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Format.swift"; sourceTree = "<group>"; };
 		93C0567D24529BC800FD381E /* ImageFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilter.swift; sourceTree = "<group>"; };
 		948D7E91D45E71CD2E3B9D4BEF64827F /* Contain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Contain.swift; path = Sources/Nimble/Matchers/Contain.swift; sourceTree = "<group>"; };
 		96C9293D14A58DDD97AA4880039FCC9A /* NimbleXCTestHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NimbleXCTestHandler.swift; path = Sources/Nimble/Adapters/NimbleXCTestHandler.swift; sourceTree = "<group>"; };
@@ -373,7 +374,6 @@
 		B088EC9F85A212D995C28600B2EB8690 /* Example.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Example.swift; path = Sources/Quick/Example.swift; sourceTree = "<group>"; };
 		B17144DA240529FD00C11A39 /* Sort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sort.swift; sourceTree = "<group>"; };
 		B1A65A85242A2ADC00D8F2E8 /* UIImage+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Ext.swift"; sourceTree = "<group>"; };
-		B1A65A87242A2B4600D8F2E8 /* Data+ImageFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+ImageFormat.swift"; sourceTree = "<group>"; };
 		B43E4E7B79D9CF75617CD86824D5DA3E /* Pods-AaronSwift_Tests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-AaronSwift_Tests-dummy.m"; sourceTree = "<group>"; };
 		B4BF0B825EEC72D8223CE5340941DBD2 /* QuickSelectedTestSuiteBuilder.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickSelectedTestSuiteBuilder.swift; path = Sources/Quick/QuickSelectedTestSuiteBuilder.swift; sourceTree = "<group>"; };
 		B59C1A8E80E60BB1EED308EBB9A94AFF /* QCKDSL.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = QCKDSL.m; path = Sources/QuickObjectiveC/DSL/QCKDSL.m; sourceTree = "<group>"; };
@@ -795,7 +795,7 @@
 				B1A65A85242A2ADC00D8F2E8 /* UIImage+Ext.swift */,
 				936B6621247360290064C49C /* UIImage+HEIC.swift */,
 				93BE77E7247B91B30003462B /* UIImage+GIF.swift */,
-				B1A65A87242A2B4600D8F2E8 /* Data+ImageFormat.swift */,
+				93BE77F2247C9B7B0003462B /* UIImage+Format.swift */,
 			);
 			name = Image;
 			path = AaronSwift/Classes/Image;
@@ -1323,11 +1323,11 @@
 				B1A65A86242A2ADC00D8F2E8 /* UIImage+Ext.swift in Sources */,
 				981451CE09F7B933F05B635F33F068E1 /* AaronSwift-dummy.m in Sources */,
 				580413CB48337DD1D2D179BC45A39182 /* ReplaceMe.swift in Sources */,
+				93BE77F3247C9B7B0003462B /* UIImage+Format.swift in Sources */,
 				93C0567E24529BC800FD381E /* ImageFilter.swift in Sources */,
 				B17144DB240529FD00C11A39 /* Sort.swift in Sources */,
 				936B6622247360290064C49C /* UIImage+HEIC.swift in Sources */,
 				936B65DF246E93C20064C49C /* Decoder.swift in Sources */,
-				B1A65A88242A2B4600D8F2E8 /* Data+ImageFormat.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

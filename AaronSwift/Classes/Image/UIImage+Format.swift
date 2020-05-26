@@ -1,14 +1,39 @@
 //
-//  Data+ImageFormat.swift
+//  UIImage+Format.swift
 //  AaronSwift
 //
-//  Created by AaronYin on 2020/3/24.
+//  Created by Aaron on 2020/5/26.
 //
 
 import Foundation
 
-public enum ImageFormat {
-    case undefined, jpeg, png, gif, tiff, webP, heic, heif
+private var UIImageFormatKey = "UIImageFormat"
+
+extension UIImage {
+    
+    public var fromat: ImageFormat? {
+        set(v) {
+            objc_setAssociatedObject(self, &UIImageFormatKey, v?.rawValue, .OBJC_ASSOCIATION_COPY_NONATOMIC)
+        }
+        get {
+            guard let f = objc_getAssociatedObject(self, &UIImageFormatKey) as? String else {
+                return nil
+            }
+            return ImageFormat(rawValue: f)
+        }
+    }
+    
+}
+
+public enum ImageFormat: String {
+    case undefined = "undefined"
+    case jpeg = "jpeg"
+    case png = "png"
+    case gif = "gif"
+    case tiff = "tiff"
+    case webP = "webP"
+    case heic = "heic"
+    case heif = "heif"
 }
 
 extension Data {
