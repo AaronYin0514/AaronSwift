@@ -12,7 +12,7 @@ public typealias ImageFilter = (CIImage) -> CIImage
 public func gaussianBlur(radius: Double) -> ImageFilter {
     return { image in
         let parameters: [String : Any] = [kCIInputRadiusKey: radius, kCIInputImageKey: image]
-        guard let filter = CIFilter(name: "CIGaussianBlur", withInputParameters: parameters) else {
+        guard let filter = CIFilter(name: "CIGaussianBlur", parameters: parameters) else {
             fatalError()
         }
         guard let outputImage = filter.outputImage else {
@@ -26,7 +26,7 @@ public func colorGenerator(_ color: UIColor) -> ImageFilter {
     return { _ in
         let c = CIColor(color: color)
         let parameters = [kCIInputColorKey: c]
-        guard let filter = CIFilter(name: "CIConstantColorGenerator", withInputParameters: parameters) else {
+        guard let filter = CIFilter(name: "CIConstantColorGenerator", parameters: parameters) else {
             fatalError()
         }
         guard let outputImage = filter.outputImage else {
@@ -39,7 +39,7 @@ public func colorGenerator(_ color: UIColor) -> ImageFilter {
 public func compositeSourceOver(_ overlay: CIImage) -> ImageFilter {
     return { image in
         let parameters = [kCIInputBackgroundImageKey: image, kCIInputImageKey: overlay]
-        guard let filter = CIFilter(name: "CISourceOverCompositing", withInputParameters: parameters) else {
+        guard let filter = CIFilter(name: "CISourceOverCompositing", parameters: parameters) else {
             fatalError()
         }
         guard let outputImage = filter.outputImage else {
